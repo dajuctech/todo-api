@@ -4,6 +4,29 @@ A beginner Python backend project built with FastAPI, SQLAlchemy, SQLite, and Py
 
 The API lets you create, read, update, complete, and delete to-do tasks.
 
+Version 2 adds:
+
+- Task due dates
+- Task priority: `low`, `medium`, `high`
+- Filtering by completed status
+- Searching by task title
+- Pagination
+
+## Version 1 Scope
+
+Version 1 focuses only on a beginner-friendly Python backend API.
+
+Version 1 does not include:
+
+- Frontend website
+- User login
+- User registration
+- Authentication
+- Task sharing
+- Email reminders
+- Deployment
+- Docker
+
 ## Project Structure
 
 ```text
@@ -54,7 +77,7 @@ uv run pytest -v
 | --- | --- | --- |
 | `GET` | `/` | Check that the API is running |
 | `POST` | `/tasks` | Create a task |
-| `GET` | `/tasks` | Get all tasks |
+| `GET` | `/tasks` | Get all tasks, with optional filters/search/pagination |
 | `GET` | `/tasks/{task_id}` | Get one task |
 | `PUT` | `/tasks/{task_id}` | Update one task |
 | `PATCH` | `/tasks/{task_id}/complete` | Mark one task as completed |
@@ -65,8 +88,52 @@ uv run pytest -v
 ```json
 {
   "title": "Learn FastAPI",
-  "description": "Build a simple To-Do List API"
+  "description": "Build a simple To-Do List API",
+  "priority": "high",
+  "due_date": "2026-07-05T18:00:00"
 }
+```
+
+If `priority` is not provided, it defaults to `medium`.
+
+Allowed priority values:
+
+```text
+low
+medium
+high
+```
+
+## Filtering, Search, and Pagination
+
+Get only completed tasks:
+
+```text
+GET /tasks?completed=true
+```
+
+Get only incomplete tasks:
+
+```text
+GET /tasks?completed=false
+```
+
+Search tasks by title:
+
+```text
+GET /tasks?search=python
+```
+
+Paginate tasks:
+
+```text
+GET /tasks?skip=0&limit=10
+```
+
+Combine query parameters:
+
+```text
+GET /tasks?completed=false&search=python&skip=0&limit=10
 ```
 
 ## Notes
