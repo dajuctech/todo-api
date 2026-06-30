@@ -1,8 +1,6 @@
 # To-Do List API
 
-A beginner-friendly Python backend project built with FastAPI, SQLAlchemy, SQLite, Pydantic, JWT authentication, and a small HTML/CSS/JavaScript frontend.
-
-This project started as a simple To-Do List API and was later improved with Version 2 features such as user registration, login, protected task endpoints, task priority, due dates, filtering, search, and pagination.
+A REST API built with FastAPI, SQLAlchemy, and SQLite. Users register, authenticate with JWT, and manage their own tasks through protected endpoints. Includes a lightweight browser frontend.
 
 ## What This Project Does
 
@@ -84,19 +82,10 @@ todo-api/
 
 ## Setup
 
-From the main project folder:
-
 ```bash
-cd "/Users/daniel/Documents/Projects/software-engineer/masteringbackend/Become A Python Backend Engineer/projects/todo-api"
-```
-
-Install dependencies with uv:
-
-```bash
+cd todo-api
 uv sync
 ```
-
-If you are working from the parent `projects` folder, you can still run commands with uv, but running from `todo-api` is easier for beginners.
 
 ## Run the API
 
@@ -259,55 +248,8 @@ Combine query parameters:
 GET /tasks?completed=false&search=python&skip=0&limit=10
 ```
 
-## Version 1 Features Completed
+## Notes
 
-- API runs locally
-- API is built with Python
-- Project uses FastAPI
-- Project stores tasks in SQLite
-- User can create a task
-- User can view all tasks
-- User can view one task
-- User can update a task
-- User can complete a task
-- User can delete a task
-- API returns useful error messages
-- Code is separated into clear Python files
-- Project includes beginner-friendly setup instructions
-
-## Version 2 Features Completed
-
-- Task due dates
-- Task priority: low, medium, high
-- Filter tasks by completed status
-- Search tasks by title
-- Pagination
-- User registration
-- User login
-- JWT authentication
-- Protected task routes
-- User-owned tasks
-- Basic frontend dashboard
-- Backend test coverage
-
-## Version 2 Features Still Optional
-
-These features can be added later:
-
-- PostgreSQL database
-- Docker setup
-- Deployment
-- Frontend improvements
-- Password reset
-- Better production-ready secret management
-
-## Local Development Notes
-
-- The local SQLite database file is `todos.db`.
-- Test data uses an in-memory SQLite database.
-- Generated files such as `*.db`, `__pycache__/`, and `.pytest_cache/` should not be committed to Git.
-- The JWT secret key in this learning project should be changed before production use.
-
-## GitHub Note
-
-At the moment, this repository can be configured to publish only the `README.md` file to GitHub while keeping the working code local. If you want the full source code on GitHub later, add the project files back to Git tracking before committing and pushing.
+- `todos.db` is the local SQLite database file — not committed to Git.
+- Tests use an in-memory SQLite database so they leave no files on disk.
+- `SECRET_KEY` in `security.py` must be replaced with a strong random value before any production deployment.
