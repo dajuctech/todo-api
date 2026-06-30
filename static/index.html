@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>To-Do API Dashboard</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main class="layout">
+      <section class="sidebar">
+        <div>
+          <p class="eyebrow">Python Backend</p>
+          <h1>To-Do Dashboard</h1>
+        </div>
+
+        <div id="auth-panel" class="panel">
+          <div class="tabs" role="tablist" aria-label="Authentication">
+            <button id="login-tab" class="tab active" type="button">Login</button>
+            <button id="register-tab" class="tab" type="button">Register</button>
+          </div>
+
+          <form id="auth-form" class="form">
+            <label>
+              Email
+              <input id="email" type="email" autocomplete="email" required />
+            </label>
+
+            <label>
+              Password
+              <input
+                id="password"
+                type="password"
+                autocomplete="current-password"
+                minlength="8"
+                required
+              />
+            </label>
+
+            <button id="auth-submit" class="primary" type="submit">Login</button>
+          </form>
+        </div>
+
+        <div id="session-panel" class="panel hidden">
+          <p class="label">Signed in as</p>
+          <p id="session-email" class="session-email"></p>
+          <button id="logout-button" class="secondary" type="button">Logout</button>
+        </div>
+
+        <p id="message" class="message" role="status"></p>
+      </section>
+
+      <section id="dashboard" class="content hidden">
+        <div class="toolbar">
+          <div>
+            <p class="eyebrow">Tasks</p>
+            <h2>Manage Work</h2>
+          </div>
+          <button id="refresh-button" class="secondary" type="button">Refresh</button>
+        </div>
+
+        <form id="task-form" class="task-form">
+          <input id="task-title" type="text" placeholder="Task title" required />
+          <input id="task-description" type="text" placeholder="Description" />
+          <select id="task-priority">
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+            <option value="high">High</option>
+          </select>
+          <input id="task-due-date" type="datetime-local" />
+          <button class="primary" type="submit">Add</button>
+        </form>
+
+        <div class="filters">
+          <input id="search" type="search" placeholder="Search title" />
+          <select id="completed-filter">
+            <option value="">All</option>
+            <option value="false">Open</option>
+            <option value="true">Completed</option>
+          </select>
+          <input id="limit" type="number" min="1" max="100" value="10" />
+          <div class="pager">
+            <button id="prev-button" class="icon-button" type="button" aria-label="Previous page">
+              &lt;
+            </button>
+            <span id="page-label">Page 1</span>
+            <button id="next-button" class="icon-button" type="button" aria-label="Next page">
+              &gt;
+            </button>
+          </div>
+        </div>
+
+        <div id="tasks" class="tasks"></div>
+      </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
