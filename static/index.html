@@ -9,9 +9,10 @@
   <body>
     <main class="layout">
       <section class="sidebar">
-        <div>
+        <div class="brand">
           <p class="eyebrow">Python Backend</p>
           <h1>To-Do Dashboard</h1>
+          <p class="brand-copy">Secure task management powered by FastAPI.</p>
         </div>
 
         <div id="auth-panel" class="panel">
@@ -23,7 +24,7 @@
           <form id="auth-form" class="form">
             <label>
               Email
-              <input id="email" type="email" autocomplete="email" required />
+              <input id="email" type="email" autocomplete="email" placeholder="name@example.com" required />
             </label>
 
             <label>
@@ -33,6 +34,7 @@
                 type="password"
                 autocomplete="current-password"
                 minlength="8"
+                placeholder="Minimum 8 characters"
                 required
               />
             </label>
@@ -51,46 +53,84 @@
       </section>
 
       <section id="dashboard" class="content hidden">
-        <div class="toolbar">
+        <header class="workspace-header">
           <div>
             <p class="eyebrow">Tasks</p>
             <h2>Manage Work</h2>
+            <p id="workspace-summary" class="muted">No tasks loaded yet.</p>
           </div>
-          <button id="refresh-button" class="secondary" type="button">Refresh</button>
-        </div>
+          <button id="refresh-button" class="secondary" type="button" aria-label="Refresh tasks">
+            Refresh
+          </button>
+        </header>
 
-        <form id="task-form" class="task-form">
-          <input id="task-title" type="text" placeholder="Task title" required />
-          <input id="task-description" type="text" placeholder="Description" />
-          <select id="task-priority">
-            <option value="medium">Medium</option>
-            <option value="low">Low</option>
-            <option value="high">High</option>
-          </select>
-          <input id="task-due-date" type="datetime-local" />
-          <button class="primary" type="submit">Add</button>
-        </form>
-
-        <div class="filters">
-          <input id="search" type="search" placeholder="Search title" />
-          <select id="completed-filter">
-            <option value="">All</option>
-            <option value="false">Open</option>
-            <option value="true">Completed</option>
-          </select>
-          <input id="limit" type="number" min="1" max="100" value="10" />
-          <div class="pager">
-            <button id="prev-button" class="icon-button" type="button" aria-label="Previous page">
-              &lt;
-            </button>
-            <span id="page-label">Page 1</span>
-            <button id="next-button" class="icon-button" type="button" aria-label="Next page">
-              &gt;
-            </button>
+        <section class="metric-grid" aria-label="Task summary">
+          <div class="metric">
+            <span class="metric-label">Open</span>
+            <strong id="open-count">0</strong>
           </div>
-        </div>
+          <div class="metric">
+            <span class="metric-label">Completed</span>
+            <strong id="completed-count">0</strong>
+          </div>
+          <div class="metric">
+            <span class="metric-label">High Priority</span>
+            <strong id="high-count">0</strong>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Due Soon</span>
+            <strong id="due-count">0</strong>
+          </div>
+        </section>
 
-        <div id="tasks" class="tasks"></div>
+        <section class="composer" aria-labelledby="task-form-title">
+          <div class="section-heading">
+            <h3 id="task-form-title">New Task</h3>
+            <button id="cancel-edit-button" class="text-button hidden" type="button">Cancel edit</button>
+          </div>
+
+          <form id="task-form" class="task-form">
+            <input id="task-title" type="text" placeholder="Task title" required />
+            <input id="task-description" type="text" placeholder="Description" />
+            <select id="task-priority" aria-label="Task priority">
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
+              <option value="high">High</option>
+            </select>
+            <input id="task-due-date" type="datetime-local" aria-label="Task due date" />
+            <button id="task-submit-button" class="primary" type="submit">Add Task</button>
+          </form>
+        </section>
+
+        <section class="task-surface">
+          <div class="filters">
+            <input id="search" type="search" placeholder="Search title" />
+            <select id="completed-filter" aria-label="Completion filter">
+              <option value="">All tasks</option>
+              <option value="false">Open</option>
+              <option value="true">Completed</option>
+            </select>
+            <input id="limit" type="number" min="1" max="100" value="10" aria-label="Tasks per page" />
+            <div class="pager">
+              <button id="prev-button" class="icon-button" type="button" aria-label="Previous page">
+                &lt;
+              </button>
+              <span id="page-label">Page 1</span>
+              <button id="next-button" class="icon-button" type="button" aria-label="Next page">
+                &gt;
+              </button>
+            </div>
+          </div>
+
+          <div class="list-header">
+            <span>Task</span>
+            <span>Priority</span>
+            <span>Status</span>
+            <span>Actions</span>
+          </div>
+
+          <div id="tasks" class="tasks" aria-live="polite"></div>
+        </section>
       </section>
     </main>
 

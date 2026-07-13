@@ -1,8 +1,14 @@
 # To-Do List API
 
-A REST API built with FastAPI, SQLAlchemy, and SQLite. Users register, authenticate with JWT, and manage their own tasks through protected endpoints. Includes a lightweight browser frontend.
+A REST API built with FastAPI, SQLAlchemy, and SQLite. Users register, authenticate with JWT, and manage their own tasks through protected endpoints. Includes a portfolio-style browser dashboard served by FastAPI.
 
-## What This Project Does
+## Project Overview
+
+This project is a Python backend and browser frontend for managing personal to-do tasks.
+
+The backend is built with FastAPI and stores data in SQLite. Users can register, login, receive a JWT access token, and manage only their own tasks. The frontend is a responsive HTML, CSS, and JavaScript dashboard served by FastAPI at `/app`.
+
+## Features
 
 The application allows a user to:
 
@@ -18,7 +24,7 @@ The application allows a user to:
 - Search tasks by title
 - Filter tasks by completed status
 - Paginate task results
-- Use a simple browser dashboard at `/app`
+- Use a responsive browser dashboard at `/app`
 
 ## Tech Stack
 
@@ -31,7 +37,35 @@ The application allows a user to:
 - Passlib for password hashing
 - Pytest for testing
 - uv for dependency and environment management
-- HTML, CSS, and JavaScript for the simple frontend
+- HTML, CSS, and JavaScript for the frontend
+
+## Frontend Dashboard
+
+The frontend is available at:
+
+```text
+http://127.0.0.1:8000/app
+```
+
+The dashboard includes:
+
+- Register and login screens
+- JWT token storage in the browser
+- Automatic logout when the token is invalid or expired
+- Task summary cards for open, completed, high priority, and due soon tasks
+- Create task form with title, description, priority, and due date
+- Edit task mode with cancel support
+- Complete, reopen, and delete task actions
+- Search by task title
+- Filter by task status
+- Pagination controls
+- Responsive layout for smaller screens
+
+The frontend talks directly to the FastAPI backend using `fetch()` and sends the JWT token in this header for protected task requests:
+
+```text
+Authorization: Bearer your-access-token-here
+```
 
 ## Authentication Flow
 
@@ -75,12 +109,16 @@ todo-api/
     test_tasks.py
   .gitignore
   README.md
-  note.md
-  prd.md
+  main.py
   pyproject.toml
+  uv.lock
 ```
 
 ## Setup
+
+This project uses `uv` for dependency and environment management.
+
+From the project folder, install dependencies:
 
 ```bash
 cd todo-api
@@ -124,8 +162,18 @@ uv run pytest -v
 Expected result:
 
 ```text
-36 passed
+36 passed, 2 warnings
 ```
+
+## Test Status
+
+Latest confirmed local test result:
+
+```text
+36 passed, 2 warnings
+```
+
+The warnings come from dependency deprecation notices and do not currently stop the tests from passing.
 
 ## API Endpoints
 
@@ -202,19 +250,21 @@ If `priority` is not provided, it defaults to `medium`.
 
 ## Testing Protected Endpoints in Swagger Docs
 
-1. Start the server.
-2. Go to `http://127.0.0.1:8000/docs`.
-3. Use `POST /auth/register` to create a user.
-4. Use `POST /auth/login` to login.
-5. Copy the `access_token` value from the login response.
-6. Click the `Authorize` button in Swagger.
-7. Enter the token like this:
+Swagger docs are useful for inspecting the API and testing public endpoints.
+
+For protected task endpoints, login first with:
 
 ```text
-Bearer your-access-token-here
+POST /auth/login
 ```
 
-8. Test the `/tasks` endpoints.
+Then send the returned token in the request header:
+
+```text
+Authorization: Bearer your-access-token-here
+```
+
+The frontend does this automatically after login. API clients like Postman, Insomnia, or curl can also send this header manually.
 
 ## Filtering, Search, and Pagination
 
@@ -252,4 +302,17 @@ GET /tasks?completed=false&search=python&skip=0&limit=10
 
 - `todos.db` is the local SQLite database file — not committed to Git.
 - Tests use an in-memory SQLite database so they leave no files on disk.
+- If the database schema changes while learning, delete `todos.db` and restart the server so SQLite can recreate the local development database.
 - `SECRET_KEY` in `security.py` must be replaced with a strong random value before any production deployment.
+
+## Optional GitHub Cleanup
+
+If temporary branches were created while comparing project versions, delete any branch you no longer need after confirming `main` has the correct code.
+
+Example:
+
+```bash
+git push origin --delete backend-auth-tests-version
+```
+
+Only delete a branch after you are sure it is not needed.
