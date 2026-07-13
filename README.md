@@ -8,6 +8,10 @@ This project is a Python backend and browser frontend for managing personal to-d
 
 The backend is built with FastAPI and stores data in SQLite. Users can register, login, receive a JWT access token, and manage only their own tasks. The frontend is a responsive HTML, CSS, and JavaScript dashboard served by FastAPI at `/app`.
 
+## Frontend Preview
+
+![To-Do Dashboard frontend preview](assets/frontend-dashboard.png)
+
 ## Features
 
 The application allows a user to:
@@ -98,6 +102,8 @@ todo-api/
     models.py
     schemas.py
     security.py
+  assets/
+    frontend-dashboard.png
   static/
     app.js
     index.html
